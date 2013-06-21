@@ -1117,7 +1117,7 @@ class Net::LDAP
   def paged_searches_supported?
 		# active directory returns that it supports paged results. However
 		# it returns binary data in the rfc2696_cookie which throws an
-		# encoding exception breaking searching.		
+		# encoding exception breaking searching.
 		return false if @force_no_page
     @server_caps ||= search_root_dse
     @server_caps[:supportedcontrol].include?(Net::LDAP::LDAPControls::PAGED_RESULTS)
