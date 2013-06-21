@@ -980,8 +980,8 @@ class Net::LDAP
   #
   #  dn = "cn=modifyme, dc=example, dc=com"
   #  ldap.delete_attribute dn, :mail
-  def delete_attribute(dn, attribute)
-    modify(:dn => dn, :operations => [[:delete, attribute, nil]])
+  def delete_attribute(dn, attribute, value=nil)
+    modify(:dn => dn, :operations => [[:delete, attribute, value]])
   end
 
   # Rename an entry on the remote DIS by changing the last RDN of its DN.
