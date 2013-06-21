@@ -964,8 +964,8 @@ class Net::LDAP
   #
   #  dn = "cn=modifyme, dc=example, dc=com"
   #  ldap.delete_attribute dn, :mail
-  def delete_attribute(dn, attribute)
-    modify(:dn => dn, :operations => [[:delete, attribute, nil]])
+  def delete_attribute(dn, attribute, value=nil)
+    modify(:dn => dn, :operations => [[:delete, attribute, value]])
   end
 
   # Rename an entry on the remote DIS by changing the last RDN of its DN.
@@ -1320,7 +1320,7 @@ class Net::LDAP::Connection #:nodoc:
   # in the protocol.
   #++
   def search(args = {})
-    search_filter = (args && args[:filter]) || 
+    search_filter = (args && args[:filter]) ||
       Net::LDAP::Filter.eq("objectclass", "*")
     search_filter = Net::LDAP::Filter.construct(search_filter) if search_filter.is_a?(String)
     search_base = (args && args[:base]) || "dc=example, dc=com"
@@ -1525,7 +1525,7 @@ class Net::LDAP::Connection #:nodoc:
 
 		request = [old_dn.to_ber, new_rdn.to_ber, delete_attrs.to_ber]
 		request << new_superior.to_ber unless new_superior == nil
-  	
+
     pkt = [next_msgid.to_ber, request.to_ber_appsequence(12)].to_ber_sequence
     @conn.write pkt
 
